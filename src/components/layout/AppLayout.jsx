@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
 import { LogoutOutlined } from "@ant-design/icons";
 import Button from "../common/Button";
-
+import { useMobile } from "../../hooks/useMobile";
 const { Header, Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { email } = useSelector((state) => state.auth);
+  const isMobile = useMobile();
   
   // Always store email in localStorage when available
   React.useEffect(() => {
@@ -61,7 +62,7 @@ const AppLayout = ({ children }) => {
           />
         </div>
       </Header>
-      <Content style={{ padding: 24 }}>{children}</Content>
+      <Content style={{ padding: isMobile ? 8 : 24, minHeight: 'calc(100vh - 64px)' }}>{children}</Content>
     </Layout>
   );
 };
