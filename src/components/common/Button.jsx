@@ -8,6 +8,7 @@ const Button = ({ children, style, size = 'large', block = true, ...rest }) => {
       style={{ borderRadius: '2px', width: 'fit-content', ...style }}
       size={size}
       block={block}
+      
     >
       {children}
     </AntdButton>

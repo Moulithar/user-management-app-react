@@ -135,7 +135,7 @@ const UserList = () => {
             <Button 
               type="primary" 
               onClick={() => onEdit(record)}
-              icon={<EditOutlined />}
+              icon={ isMobile && <EditOutlined />}
               size={isMobile ? 'small' : 'middle'}
               style={isMobile ? { minWidth: '20px' } : {}}
             >
@@ -145,7 +145,7 @@ const UserList = () => {
               type="primary" 
               danger 
               onClick={() => onDelete(record)}
-              icon={<DeleteOutlined />}
+              icon={ isMobile && <DeleteOutlined />}
               size={isMobile ? 'small' : 'middle'}
               style={isMobile ? { minWidth: '20px' } : {}}
             >
@@ -262,19 +262,6 @@ const UserList = () => {
     },
   };
 
-  //   useEffect(() => {
-  //     console.log("Pagination state:", {
-  //       viewMode,
-  //       currentPage,
-  //       pageSize,
-  //       pagination: {
-  //         page: pagination.page,
-  //         per_page: pagination.per_page,
-  //         total: pagination.total,
-  //       },
-  //       filteredDataLength: filteredData.length,
-  //     });
-  //   }, [viewMode, currentPage, pageSize, pagination, filteredData.length]);
 
   return (
     <>
@@ -292,60 +279,70 @@ const UserList = () => {
           >
             <h3>Users</h3>
             <div style={{ display: "flex", gap: isMobile ? 8 : 12, alignItems: "center" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #d9d9d9",
-                  borderRadius: "2px",
-                  overflow: "hidden",
-                  width: "fit-content",
-                  maxHeight: isMobile ? "24px" : "40px",
-                }}
-              >
-                <Input
-                  placeholder="Search by name or email"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  style={{
-                    // minWidth: 240,
-                    border: "none",
-                    boxShadow: "none",
-                  }}
-                  bordered={false}
-                  allowClear
-                />
+              <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '12px' }}>
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    padding: isMobile ? "0 8px" : "0 12px",
-                    backgroundColor: "#fafafa",
-                    height: isMobile ? "24px" : "40px",
-                    borderLeft: "1px solid #d9d9d9",
-                    flex: 1,
+                    border: "1px solid #d9d9d9",
+                    borderRadius: "2px",
+                    overflow: "hidden",
+                    width: "fit-content",
+                    height: isMobile ? "32px" : "40px",
                   }}
                 >
-                  <SearchOutlined
+                  <Input
+                    placeholder="Search by name or email"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     style={{
-                      fontSize: 16,
-                      color: "#8c8c8c",
-                      cursor: "pointer",
-                      background: "transparent",
+                      height: '100%',
+                      border: "none",
+                      boxShadow: "none",
+                      padding: isMobile ? '4px 8px' : '8px 12px',
+                      width: isMobile ? '160px' : '200px',
                     }}
+                    bordered={false}
+                    size={isMobile ? 'small' : 'middle'}
+                    allowClear
                   />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: isMobile ? "0 8px" : "0 12px",
+                      backgroundColor: "#fafafa",
+                      height: "100%",
+                      borderLeft: "1px solid #d9d9d9",
+                    }}
+                  >
+                    <SearchOutlined
+                      style={{
+                        fontSize: isMobile ? 14 : 16,
+                        color: "#8c8c8c",
+                        cursor: "pointer",
+                        background: "transparent",
+                      }}
+                    />
+                  </div>
                 </div>
+                <Button 
+                  type="primary" 
+                  onClick={() => setIsCreateOpen(true)}
+                  icon={ isMobile ? <PlusOutlined /> : null}
+                  size={isMobile ? 'small' : 'middle'}
+                  style={{
+                    height: isMobile ? '32px' : '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: isMobile ? '0 8px' : '0 16px'
+                  }}
+                >
+                  {!isMobile && 'Create User'}
+                </Button>
               </div>
-              <Button 
-                type="primary" 
-                onClick={() => setIsCreateOpen(true)}
-                icon={<PlusOutlined />}
-                size={isMobile ? 'small' : 'middle'}
-                style={isMobile ? { minWidth: '32px' } : {}}
-              >
-                {!isMobile && 'Create User'}
-              </Button>
               {/* Logout is in AppLayout header */}
             </div>
           </div>
@@ -514,7 +511,7 @@ const UserList = () => {
               <Pagination
                 current={pagination.page}
                 pageSize={pagination.per_page || 6}
-                total={pagination.total} // Changed from filteredData.length to pagination.total
+                total={pagination.total} 
                 onChange={(page) => {
                   console.log(
                     "Grid pagination change - Page:",
@@ -603,7 +600,7 @@ const UserList = () => {
               { required: true, message: "Profile image URL is required" },
             ]}
           >
-            <Input placeholder="https://..." />
+            <Input placeholder="https://reqres.in/img/faces/1-image.jpg" />
           </AForm.Item>
           <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
             <Button

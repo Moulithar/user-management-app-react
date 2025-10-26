@@ -11,7 +11,7 @@ const Input = ({ type = 'text', prefix, ...props }) => {
       {...props}
       style={{ ...props.style, borderRadius: '4px' }}
       prefix={prefixIcon}
-      size="large"
+      size={props.size || "large"}
     />
   );
 };

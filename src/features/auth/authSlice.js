@@ -1,16 +1,14 @@
-// src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../../config/api';
+import { login as loginService } from '../../services/authService';
 
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
-    try {
-      const response = await api.post('/login', { email, password });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.error || 'Login failed');
+    const response = await loginService(email, password);
+    if (!response.success) {
+      return rejectWithValue(response.error);
     }
+    return { token: response.data.token, email };
   }
 );
 
@@ -18,20 +16,21 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: localStorage.getItem('token') || null,
+    email: localStorage.getItem('userEmail') || null,
     loading: false,
-    error: null,
-    email: null,
+    error: null
   },
   reducers: {
     logout: (state) => {
       localStorage.removeItem('token');
+      localStorage.removeItem('userEmail');
       state.token = null;
-      state.error = null;
       state.email = null;
+      state.error = null;
     },
     clearError: (state) => {
       state.error = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -42,9 +41,9 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        state.email = action.payload.email;
         localStorage.setItem('token', action.payload.token);
-        // store the email used to login for header display
-        state.email = action.meta?.arg?.email || state.email;
+        localStorage.setItem('userEmail', action.payload.email);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
