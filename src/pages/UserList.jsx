@@ -13,10 +13,10 @@ import { useMobile } from "../hooks/useMobile";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Button from "../components/common/Button";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
-import { UserGrid } from "./UserList/components/UserGrid";
-import { UserToolbar } from "./UserList/components/UserToolbar";
-import { CreateUserModal } from "./UserList/components/CreateUserModal";
-import { EditUserModal } from "./UserList/components/EditUserModal";
+import { UserGrid } from "../features/user/UserList/components/UserGrid";
+import { UserToolbar } from "../features/user/UserList/components/UserToolbar";
+import { CreateUserModal } from "../features/user/UserList/components/CreateUserModal";
+import { EditUserModal } from "../features/user/UserList/components/EditUserModal";
 
 const UserList = () => {
   const navigate = useNavigate();

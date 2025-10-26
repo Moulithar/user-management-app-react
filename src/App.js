@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Login from "./pages/Login";
 import UserList from "./pages/UserList";
 import NotFound from "./pages/NotFound";
-import AppLayout from "./components/layout/AppLayout";
+import AppLayout from "./layout/AppLayout";
 import Loader from './components/common/Loader';
 
 // Protected Route component

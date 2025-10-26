@@ -2,10 +2,10 @@ import React from "react";
 import { Layout, Button as AntdButton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../features/auth/authSlice";
+import { logout } from "../features/auth/authSlice";
 import { LogoutOutlined } from "@ant-design/icons";
-import Button from "../common/Button";
-import { useMobile } from "../../hooks/useMobile";
+import Button from "../components/common/Button";
+import { useMobile } from "../hooks/useMobile";
 const { Header, Content } = Layout;
 
 const AppLayout = ({ children }) => {

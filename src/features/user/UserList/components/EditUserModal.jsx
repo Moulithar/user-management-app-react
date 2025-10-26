@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "antd";
-import { UserForm } from "../../../components/user/UserForm";
+import { UserForm } from "./UserForm";
 
 export const EditUserModal = ({ open, loading, form, initialValues, onCancel, onSubmit }) => {
   return (
@@ -9,7 +9,7 @@ export const EditUserModal = ({ open, loading, form, initialValues, onCancel, on
       open={open}
       onCancel={onCancel}
       footer={null}
-      destroyOnClose
+      destroyOnHidden
     >
       <UserForm
         form={form}

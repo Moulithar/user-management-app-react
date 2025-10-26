@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Pagination } from "antd";
-import Button from "../../../components/common/Button";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import Button from "../../../../components/common/Button";
 
 const GridContainer = styled.div`
   display: grid;
