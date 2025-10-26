@@ -21,44 +21,45 @@ const GridContainer = styled.div`
   }
 `;
 
-const cardStyle = {
-  position: "relative",
-  borderRadius: "12px",
-  overflow: "hidden",
-  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-  height: "220px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "#fff",
-  cursor: "pointer",
-  padding: "20px",
-  textAlign: "center",
-  "&:hover": {
-    transform: "translateY(-4px)",
-    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
-  },
-};
+const StyledCard = styled.div`
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  // cursor: pointer;
+  padding: 20px;
+  text-align: center;
 
-const cardHoverStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.6)",
-  display: "none",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "16px",
-  transition: "opacity 0.3s ease",
-  opacity: 0,
-  "&:hover": {
-    opacity: 1,
-  },
-};
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover .hover-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`;
+
+const HoverOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgba(154, 154, 154, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 12px;
+`;
 
 export const UserGrid = ({
   users,
@@ -71,24 +72,7 @@ export const UserGrid = ({
     <div style={{ background: "#fff" }}>
       <GridContainer>
         {users.map((user) => (
-          <div
-            key={user.id}
-            style={cardStyle}
-            onMouseEnter={(e) => {
-              const hoverEl = e.currentTarget.querySelector(".card-hover");
-              hoverEl.style.display = "flex";
-              setTimeout(() => {
-                hoverEl.style.opacity = 1;
-              }, 10);
-            }}
-            onMouseLeave={(e) => {
-              const hoverEl = e.currentTarget.querySelector(".card-hover");
-              hoverEl.style.opacity = 0;
-              setTimeout(() => {
-                hoverEl.style.display = "none";
-              }, 300);
-            }}
-          >
+          <StyledCard key={user.id}>
             <img
               src={user.avatar}
               alt="avatar"
@@ -126,11 +110,7 @@ export const UserGrid = ({
                 {user.email}
               </div>
             </div>
-            <div
-              className="card-hover"
-              style={cardHoverStyle}
-              onClick={(e) => e.stopPropagation()}
-            >
+            <HoverOverlay className="hover-overlay" onClick={(e) => e.stopPropagation()}>
               <Button
                 type="primary"
                 shape="circle"
@@ -162,8 +142,8 @@ export const UserGrid = ({
                   borderRadius: "50%",
                 }}
               />
-            </div>
-          </div>
+            </HoverOverlay>
+          </StyledCard>
         ))}
       </GridContainer>
       <div
