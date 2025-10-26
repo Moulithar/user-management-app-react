@@ -14,9 +14,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const { token, loading, error } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (token) navigate('/users');
-  }, [token, navigate]);
+//   useEffect(() => {
+//     if (token) navigate('/users');
+//   }, [token, navigate]);
 
   useEffect(() => {
     if (error) {
@@ -50,9 +50,13 @@ const Login = () => {
       <Card>
         <Form
           name="login"
+        //   initialValues={{
+        //     email: "eve.holt@reqres.in",
+        //     password: "cityslicka",
+        //   }}
           initialValues={{
-            email: "eve.holt@reqres.in",
-            password: "cityslicka",
+            email: "",
+            password: "",
           }}
           onFinish={onFinish}
         >
