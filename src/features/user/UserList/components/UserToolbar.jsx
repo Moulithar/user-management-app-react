@@ -1,7 +1,12 @@
 import React from "react";
-import { Space } from "antd";
+import { Space, Tooltip } from "antd";
 
-import { PlusOutlined, TableOutlined, OrderedListOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  TableOutlined,
+  OrderedListOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import Input from "../../../../components/common/Input";
 import Button from "../../../../components/common/Button";
 
@@ -15,8 +20,15 @@ export const UserToolbar = ({
 }) => {
   return (
     <div style={{ padding: "16px 16px 0 16px", backgroundColor: "#FFFFFF" }}>
-      <Space direction="vertical" size={isMobile ? 8 : 12} style={{ width: "100%" }}>
-        <Space align="center" style={{ width: "100%", justifyContent: "space-between" }}>
+      <Space
+        direction="vertical"
+        size={isMobile ? 8 : 12}
+        style={{ width: "100%" }}
+      >
+        <Space
+          align="center"
+          style={{ width: "100%", justifyContent: "space-between" }}
+        >
           <h3 style={{ margin: 0 }}>Users</h3>
           <Space align="center" size={isMobile ? 8 : 12}>
             <div
@@ -57,20 +69,27 @@ export const UserToolbar = ({
                   borderLeft: "1px solid #d9d9d9",
                 }}
               >
-                <SearchOutlined style={{ fontSize: isMobile ? 14 : 16, color: "#8c8c8c" }} />
+                <SearchOutlined
+                  style={{ fontSize: isMobile ? 14 : 16, color: "#8c8c8c" }}
+                />
               </div>
             </div>
 
-            <Button
-              aria-label="Create user"
-              type="primary"
-              onClick={onCreate}
-              icon={isMobile ? <PlusOutlined /> : null}
-              size={isMobile ? "small" : "middle"}
-              style={{ height: isMobile ? 32 : 40, padding: isMobile ? "0 8px" : "0 16px" }}
-            >
-              {!isMobile && "Create User"}
-            </Button>
+            <Tooltip title="Create user">
+              <Button
+                aria-label="Create user"
+                type="primary"
+                onClick={onCreate}
+                icon={isMobile ? <PlusOutlined /> : null}
+                size={isMobile ? "small" : "middle"}
+                style={{
+                  height: isMobile ? 32 : 40,
+                  padding: isMobile ? "0 8px" : "0 16px",
+                }}
+              >
+                {!isMobile && "Create User"}
+              </Button>
+            </Tooltip>
           </Space>
         </Space>
 
@@ -82,7 +101,10 @@ export const UserToolbar = ({
             aria-label="Table view"
             style={{
               color: viewMode === "table" ? "#1677ff" : undefined,
-              border: viewMode === "table" ? "1px solid #1677ff" : "1px solid transparent",
+              border:
+                viewMode === "table"
+                  ? "1px solid #1677ff"
+                  : "1px solid transparent",
               borderRadius: 0,
             }}
             onClick={() => onViewModeChange("table")}
@@ -96,7 +118,10 @@ export const UserToolbar = ({
             aria-label="Card view"
             style={{
               color: viewMode === "grid" ? "#1677ff" : undefined,
-              border: viewMode === "grid" ? "1px solid #1677ff" : "1px solid transparent",
+              border:
+                viewMode === "grid"
+                  ? "1px solid #1677ff"
+                  : "1px solid transparent",
               borderRadius: 0,
             }}
             onClick={() => onViewModeChange("grid")}

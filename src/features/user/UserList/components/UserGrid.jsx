@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Pagination } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Avatar, Pagination, Tooltip } from "antd";
+import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
 import Button from "../../../../components/common/Button";
 
 const GridContainer = styled.div`
@@ -73,9 +73,22 @@ export const UserGrid = ({
       <GridContainer>
         {users.map((user) => (
           <StyledCard key={user.id}>
-            <img
+            <Avatar
               src={user.avatar}
-              alt="avatar"
+              icon={
+                <UserOutlined
+                  style={{
+                    color: "black",
+                    backgroundColor: "#e7e7e7",
+                    width: 80,
+                    height: 80,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                />
+              }
+              onError={() => true} // Fallback to icon on image load error
               style={{
                 width: "80px",
                 height: "80px",
@@ -86,6 +99,7 @@ export const UserGrid = ({
                 boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
               }}
             />
+
             <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
@@ -110,38 +124,45 @@ export const UserGrid = ({
                 {user.email}
               </div>
             </div>
-            <HoverOverlay className="hover-overlay" onClick={(e) => e.stopPropagation()}>
-              <Button
-                type="primary"
-                shape="circle"
-                size="large"
-                icon={<EditOutlined />}
-                onClick={() => onEdit(user)}
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#8686E6",
-                  borderRadius: "50%",
-                }}
-              />
-              <Button
-                danger
-                type="primary"
-                shape="circle"
-                icon={<DeleteOutlined />}
-                onClick={() => onDelete(user)}
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "50%",
-                }}
-              />
+            <HoverOverlay
+              className="hover-overlay"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Tooltip title="Edit user">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  size="large"
+                  icon={<EditOutlined />}
+                  onClick={() => onEdit(user)}
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#8686E6",
+                    borderRadius: "50%",
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete user">
+                <Button
+                  danger
+                  type="primary"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  onClick={() => onDelete(user)}
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                  }}
+                />
+              </Tooltip>
             </HoverOverlay>
           </StyledCard>
         ))}

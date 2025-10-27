@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Layout } from "antd";
+import { Layout, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice";
@@ -47,6 +47,8 @@ const AppLayout = ({ children }) => {
         {/* <div style={{ color: "#fff", fontWeight: 600 }}>User Management</div> */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ color: "#FFFFFF" , fontWeight: 600}}>{username}</span>
+          <Tooltip title="Logout" >
+
           <Button
             type="primary"
             danger
@@ -58,6 +60,7 @@ const AppLayout = ({ children }) => {
             aria-label="Logout"
             style={{ borderRadius: "0px" }}
           />
+          </Tooltip>
         </div>
       </Header>
       <Content style={{ padding: isMobile ? 8 : 24, minHeight: 'calc(100vh - 64px)' }}>{children}</Content>
