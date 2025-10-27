@@ -1,41 +1,56 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearError } from "../features/auth/authSlice";
-import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import Checkbox from "../components/common/Checkbox";
 import Form from "../components/common/Form";
 import Input from "../components/common/Input";
-import Button from "../components/common/Button";
+import { useMessage } from "../components/common/Message";
+import { clearError, login } from "../features/auth/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token, loading, error } = useSelector((state) => state.auth);
+  const [remembered, setRemembered] = useState({});
+  const { loading, error } = useSelector((state) => state.auth);
+  const { showMessage } = useMessage();
 
-//   useEffect(() => {
-//     if (token) navigate('/users');
-//   }, [token, navigate]);
+  const onFinish = async (values) => {
+    const result = await dispatch(
+      login({ email: values.email, password: values.password })
+    );
+    if (login.fulfilled.match(result)) {
+      if (values.remember) {
+        localStorage.setItem(
+          "rememberedUser",
+          JSON.stringify({ email: values.email, remember: true })
+        );
+      } else {
+        localStorage.removeItem("rememberedUser");
+      }
+      navigate("/users");
+    }
+  };
+
+
 
   useEffect(() => {
     if (error) {
-      message.error(error);
+      showMessage("error", error);
       dispatch(clearError());
     }
-  }, [error, dispatch]);
+  }, [error, dispatch, showMessage]);
 
-  const onFinish = async (values) => {
-    const result = await dispatch(login({ email: values.email, password: values.password }));
-    if (login.fulfilled.match(result)) {
-      if (values.remember) {
-        localStorage.setItem('rememberedUser', JSON.stringify({ email: values.email, remember: true }));
-      } else {
-        localStorage.removeItem('rememberedUser');
-      }
-      navigate('/users');
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("rememberedUser");
+      setRemembered(stored ? JSON.parse(stored) : {});
+    } catch {
+      setRemembered({});
     }
-  };
+  }, []);
+
 
   return (
     <div
@@ -50,13 +65,10 @@ const Login = () => {
       <Card>
         <Form
           name="login"
-        //   initialValues={{
-        //     email: "eve.holt@reqres.in",
-        //     password: "cityslicka",
-        //   }}
           initialValues={{
-            email: "",
+            email: remembered.email || "",
             password: "",
+            remember: !!remembered.remember,
           }}
           onFinish={onFinish}
         >
@@ -80,20 +92,18 @@ const Login = () => {
             <Input type="password" prefix="lock" placeholder="Password" />
           </Form.Item>
 
-          
-
           <Form.Item name="remember" valuePropName="checked">
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
           <Form.Item>
-            <Button 
-              type="primary" 
+            <Button
+              type="primary"
               htmlType="submit"
               loading={loading}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Log in'}
+              {loading ? "Logging in..." : "Log in"}
             </Button>
           </Form.Item>
         </Form>

@@ -1,5 +1,5 @@
-import React from "react";
-import { Layout, Button as AntdButton } from "antd";
+import React, { useEffect } from "react";
+import { Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice";
@@ -14,14 +14,12 @@ const AppLayout = ({ children }) => {
   const { email } = useSelector((state) => state.auth);
   const isMobile = useMobile();
   
-  // Always store email in localStorage when available
-  React.useEffect(() => {
+  useEffect(() => {
     if (email) {
       localStorage.setItem('userEmail', email);
     }
   }, [email]);
 
-  // Get email from localStorage or use default
   const storedEmail = localStorage.getItem('userEmail');
   const username = email || storedEmail || "User";
 

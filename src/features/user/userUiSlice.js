@@ -22,7 +22,7 @@ const userUiSlice = createSlice({
     },
     openEdit(state, action) {
       state.isEditOpen = true;
-      state.editingUser = action.payload || null; // user object
+      state.editingUser = action.payload || null; 
     },
     closeEdit(state) {
       state.isEditOpen = false;
