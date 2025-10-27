@@ -14,7 +14,13 @@ export function getTableComponents({ isMobile }) {
           }}
         >
           {props.children}
+          <style jsx>{`
+            :not(:last-child)::before {
+              display: none !important;
+            }
+          `}</style>
         </th>
+        
       ),
     },
     body: {
